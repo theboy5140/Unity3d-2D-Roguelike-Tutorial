@@ -7,7 +7,7 @@ This is a very simple game help you understand the normal operation about unity3
 
 __Development Platform__
 
-OS : Windows 10 Enterprie Edition 64 Bit
+OS : Windows 10 Enterprise Edition 64 Bit
 
 Engine : Unity 5.5.1f1 Personal 64 Bit 
 
