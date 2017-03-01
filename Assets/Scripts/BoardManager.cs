@@ -22,16 +22,16 @@ public class BoardManager : MonoBehaviour
     private int level = 1;
     private List<Vector3> positions = new List<Vector3>();
 
-    public void SetUpBoard(int level)
+    public void SetupScene(int level)
     {
-        InitGround ();
+        SetUpFloor ();
        
         this.level = level;
 
-        InitLevelItem ();
+        SetUpEnemyAndFood ();
     }
 
-    void InitLevelItem()
+    void SetUpEnemyAndFood()
     {
         int enemyCount = level * enemyTime;
         int foodCount = level * foodTime;
@@ -62,7 +62,7 @@ public class BoardManager : MonoBehaviour
         Instantiate (tile, position, Quaternion.identity);
     }
 
-    void InitGround()
+    void SetUpFloor()
     {
         positions.Clear ();
         
@@ -95,7 +95,7 @@ public class BoardManager : MonoBehaviour
 
     void Start()
     {
-        SetUpBoard (1);
+      //  SetUpBoard (1);
     }
 
     void Update()
