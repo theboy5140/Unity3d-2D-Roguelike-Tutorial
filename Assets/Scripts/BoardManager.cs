@@ -25,10 +25,9 @@ public class BoardManager : MonoBehaviour
     public void SetUpBoard(int level)
     {
         InitGround ();
-        if (1 < level) 
-        {
-            this.level = level;        
-        }
+       
+        this.level = level;
+
         InitLevelItem ();
     }
 
@@ -88,7 +87,6 @@ public class BoardManager : MonoBehaviour
                     {
                         positions.Add (position);
                     }
-                        
                 }
                 Instantiate (tile, position, Quaternion.identity);
             }
