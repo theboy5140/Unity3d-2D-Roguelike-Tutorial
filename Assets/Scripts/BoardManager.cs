@@ -81,7 +81,14 @@ public class BoardManager : MonoBehaviour
                 } else
                 {
                     tile = floorTile[Random.Range(0, floorTile.Length)];
-                    positions.Add (position);
+                    if (i == width - 2 && n == height - 2) 
+                    {
+                        tile = exitTile;
+                    } else 
+                    {
+                        positions.Add (position);
+                    }
+                        
                 }
                 Instantiate (tile, position, Quaternion.identity);
             }
