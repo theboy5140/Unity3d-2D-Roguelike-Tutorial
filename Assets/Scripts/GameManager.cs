@@ -9,6 +9,19 @@ public class GameManager : MonoBehaviour {
 
     private int level = 2;
 
+    void TestLayerMask()
+    {
+        Vector3 start = new Vector3 (3, 6, 0);
+        Vector3 end = new Vector3 (9, 6, 0);
+
+        LayerMask mask = 1 << 0;
+        RaycastHit2D hit;
+        hit = Physics2D.Linecast (start, end, mask);
+    
+        Debug.Log (hit);
+    }
+
+
     void Awake()
     {
         if (instance == null)
@@ -32,8 +45,9 @@ public class GameManager : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		
-	}
+        TestLayerMask ();
+        Debug.Log (float.Epsilon);
+    }
 	
 	// Update is called once per frame
 	void Update () {
