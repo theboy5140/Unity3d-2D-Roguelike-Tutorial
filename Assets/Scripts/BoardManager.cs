@@ -66,14 +66,14 @@ public class BoardManager : MonoBehaviour
     {
         positions.Clear ();
         
-        for (int i = 0; i < height; i++)
+        for (int i = 0; i < width; i++)
         {
-            for (int n = 0; n < width ; n++)
+            for (int n = 0; n < height ; n++)
             {
                 Vector3 position = new Vector3 (i, n, 0.0f);
                 GameObject tile;
 
-                if (0 == i || 0 == n || height - 1 == i || width - 1 == n) 
+                if (0 == i || 0 == n || height - 1 == n || width - 1 == i) 
                 {
                     tile = outerWallTile[Random.Range(0, outerWallTile.Length)];
 
