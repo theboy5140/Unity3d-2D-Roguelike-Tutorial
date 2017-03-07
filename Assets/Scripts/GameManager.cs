@@ -2,10 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameManager : MonoBehaviour {
+public class GameManager : BaseGameObject
+{
 
     public static GameManager instance = null;
     public BoardManager boardManager;
+    public GameObject player;
+
     public int level = 1;
 
     void Awake()
@@ -30,5 +33,6 @@ public class GameManager : MonoBehaviour {
     void InitGame()
     {
         boardManager.SetupScene (level);
+        Instantiate (player, new Vector2(2,2), Quaternion.identity);
     }
 }
