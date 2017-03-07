@@ -10,28 +10,29 @@ class PlayerController : MovableObject
 
     void Update()
     {
-        Vector2 screenPosition = GetInput ();
-        Vector2 worldPisition = Camera.main.ScreenToWorldPoint (screenPosition);
-
-        if (screenPosition != Vector2.zero)
-        {
-            RaycastHit2D hitObj = new RaycastHit2D ();
-            bool canMove = Move (worldPisition, hitObj);
-            Log (canMove);
-        }
+        ControlPlayer ();
     }
 
     protected override void OnCanotMove<T> ()
     {
     } 
 
+    private void ControlPlayer()
+    {
+        Vector2 position = GetInput () + rb2d.position;
+        RaycastHit2D hibObj = new RaycastHit2D ();
+        bool canMove = Move (position, hibObj);
+        if (canMove)
+        {
+            transform.position = position;
+        }
+    }
+
     private Vector2 GetInput()
     {
-        Vector2 position = Vector2.zero;
-        if (Input.GetMouseButtonDown (0)) 
-        {
-            position = Input.mousePosition;
-        }
+        float horizontal = Input.GetAxisRaw ("Horizontal");
+        float vertical = Input.GetAxisRaw ("Vertical");
+        Vector2 position = new Vector2 (horizontal, vertical);
         return position;
     }
 }
