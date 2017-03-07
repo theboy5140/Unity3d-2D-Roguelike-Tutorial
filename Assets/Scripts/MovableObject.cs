@@ -8,6 +8,8 @@ public abstract class MovableObject : BaseGameObject
     public Rigidbody2D rb2d;
     public Collider2D collider;
 
+    private float moveTime = 0.1f;
+   
     protected void Start()
     {
     }
@@ -16,7 +18,7 @@ public abstract class MovableObject : BaseGameObject
     {
         bool result = false;
 
-        Vector2 origin = gameObject.transform.position;
+        Vector2 origin = rb2d.pos;
 
         collider.enabled = false;
 
@@ -24,17 +26,23 @@ public abstract class MovableObject : BaseGameObject
 
         if (hitObj.transform == null)
         {
+            StartCoroutine (OnMove(destination));
             result = true;
         } 
-
         return result;
     }
 
-    protected IEnumerator OnMove()
+    protected IEnumerator OnMove(Vector2 destination)
     {
-        Log ("moving now");
-
-        yield return new WaitForSeconds(1);   
+        float distance = (destination - rb2d.position).sqrMagnitude;
+        //rb2d.MovePosition (destination);
+        while (distance > float.Epsilon)
+        {
+            Vector2 newDestination = Vector2.MoveTowards (rb2d.position, destination, Time.fixedDeltaTime * 10);
+            rb2d.MovePosition (newDestination);
+            distance = (destination - rb2d.position).sqrMagnitude;
+            yield return null;
+        }
     }
 
     protected virtual void OnAttemptMove <T> () where T : Component 

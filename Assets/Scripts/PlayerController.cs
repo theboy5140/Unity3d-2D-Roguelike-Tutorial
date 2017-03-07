@@ -24,7 +24,7 @@ class PlayerController : MovableObject
         bool canMove = Move (position, hibObj);
         if (canMove)
         {
-            transform.position = position;
+            Log ("Can move");
         }
     }
 
