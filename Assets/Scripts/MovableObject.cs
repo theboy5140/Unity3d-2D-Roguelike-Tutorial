@@ -9,20 +9,26 @@ public abstract class MovableObject : BaseGameObject
     public Collider2D collider;
 
     private float moveTime = 0.1f;
-   
+    private float inverseMoveTime;
+
     protected void Start()
     {
+        inverseMoveTime = 1 / moveTime;
     }
 
-    protected bool Move(Vector2 destination, RaycastHit2D hitObj)
+    protected bool Move(int xDir, int yDir, RaycastHit2D hitObj)
     {
         bool result = false;
 
-        Vector2 origin = rb2d.pos;
+        Vector2 origin = transform.position;
+
+        Vector2 destination = origin +　new Vector2 (xDir, yDir);
 
         collider.enabled = false;
 
         hitObj = Physics2D.Linecast (origin, destination, layerMask);
+
+        collider.enabled = true;
 
         if (hitObj.transform == null)
         {
@@ -32,15 +38,18 @@ public abstract class MovableObject : BaseGameObject
         return result;
     }
 
-    protected IEnumerator OnMove(Vector2 destination)
+    protected IEnumerator OnMove(Vector3 destination)
     {
-        float distance = (destination - rb2d.position).sqrMagnitude;
+        float distance = (transform.position - destination).sqrMagnitude;
         //rb2d.MovePosition (destination);
         while (distance > float.Epsilon)
         {
-            Vector2 newDestination = Vector2.MoveTowards (rb2d.position, destination, Time.fixedDeltaTime * 10);
+            Vector3 newDestination = Vector3.MoveTowards (transform.position, destination, Time.deltaTime * 1/0.1f);
+
             rb2d.MovePosition (newDestination);
-            distance = (destination - rb2d.position).sqrMagnitude;
+
+            distance = (transform.position - destination).sqrMagnitude;
+
             yield return null;
         }
     }

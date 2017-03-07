@@ -10,29 +10,20 @@ class PlayerController : MovableObject
 
     void Update()
     {
-        ControlPlayer ();
+        ProcessInput();
     }
 
     protected override void OnCanotMove<T> ()
     {
     } 
 
-    private void ControlPlayer()
+    private void ProcessInput()
     {
-        Vector2 position = GetInput () + rb2d.position;
-        RaycastHit2D hibObj = new RaycastHit2D ();
-        bool canMove = Move (position, hibObj);
-        if (canMove)
-        {
-            Log ("Can move");
-        }
+        int xDir = (int)(Input.GetAxisRaw ("Horizontal"));
+        int yDir = (int)(Input.GetAxisRaw ("Vertical"));
+        RaycastHit2D hitObj = new RaycastHit2D ();
+        bool canMove = Move (xDir, yDir, hitObj);
+        Log (xDir);
     }
 
-    private Vector2 GetInput()
-    {
-        float horizontal = Input.GetAxisRaw ("Horizontal");
-        float vertical = Input.GetAxisRaw ("Vertical");
-        Vector2 position = new Vector2 (horizontal, vertical);
-        return position;
-    }
 }
