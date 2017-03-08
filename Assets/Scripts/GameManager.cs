@@ -10,7 +10,7 @@ public class GameManager : BaseGameObject
     public GameObject player;
 
     public int level = 1;
-    public bool playersTurn;
+    public bool playersTurn = true;
 
     void Awake()
     {

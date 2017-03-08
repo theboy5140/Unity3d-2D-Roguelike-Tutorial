@@ -52,6 +52,7 @@ public abstract class MovableObject : BaseGameObject
 
             yield return null;
         }
+        GameManager.instance.playersTurn = true;
     }
 
     protected virtual void OnAttemptMove <T> (int xDir, int yDir) where T : Component 

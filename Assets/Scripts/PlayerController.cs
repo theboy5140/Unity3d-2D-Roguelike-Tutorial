@@ -19,6 +19,9 @@ class PlayerController : MovableObject
 
     private void ProcessInput()
     {
+        if (!GameManager.instance.playersTurn)
+            return;
+        
         int horizontal = (int)(Input.GetAxisRaw ("Horizontal"));
         int vertical = (int)(Input.GetAxisRaw ("Vertical"));
 
@@ -29,10 +32,10 @@ class PlayerController : MovableObject
 
         if (0 != horizontal || 0 != vertical)
         {
+            GameManager.instance.playersTurn = false;
+
             OnAttemptMove<PlayerController> (horizontal, vertical);
         }
-
-        Log (horizontal + ":" + vertical);
     }
 
     protected override void OnAttemptMove<T> (int xDir, int yDir)

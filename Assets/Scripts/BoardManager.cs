@@ -76,8 +76,8 @@ public class BoardManager : BaseGameObject
                 if (0 == i || 0 == n || height - 1 == n || width - 1 == i) 
                 {
                     tile = outerWallTile[Random.Range(0, outerWallTile.Length)];
-
-                } else
+                }
+                else
                 {
                     tile = floorTile[Random.Range(0, floorTile.Length)];
                     if (i == width - 2 && n == height - 2) 
