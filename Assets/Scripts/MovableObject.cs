@@ -44,7 +44,7 @@ public abstract class MovableObject : BaseGameObject
         //rb2d.MovePosition (destination);
         while (distance > float.Epsilon)
         {
-            Vector3 newDestination = Vector3.MoveTowards (transform.position, destination, Time.deltaTime * 1/0.1f);
+            Vector3 newDestination = Vector3.MoveTowards (transform.position, destination, Time.deltaTime);
 
             rb2d.MovePosition (newDestination);
 

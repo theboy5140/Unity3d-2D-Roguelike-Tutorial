@@ -10,6 +10,10 @@ class PlayerController : MovableObject
 
     void Update()
     {
+    }
+
+    void FixedUpdate()
+    {
         ProcessInput();
     }
 
@@ -23,7 +27,7 @@ class PlayerController : MovableObject
         int yDir = (int)(Input.GetAxisRaw ("Vertical"));
         RaycastHit2D hitObj = new RaycastHit2D ();
         bool canMove = Move (xDir, yDir, hitObj);
-        Log (xDir);
+        Log (xDir + ":" + yDir);
     }
 
 }
