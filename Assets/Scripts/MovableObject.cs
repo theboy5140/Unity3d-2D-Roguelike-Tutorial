@@ -30,11 +30,15 @@ public abstract class MovableObject : BaseGameObject
 
         collider.enabled = true;
 
-        if (hitObj.transform == null)
+        if (hitObj.transform == null) 
         {
-            StartCoroutine (OnMove(destination));
+            StartCoroutine (OnMove (destination));
             result = true;
-        } 
+        }
+        else
+        {
+            GameManager.instance.playersTurn = true;
+        }
         return result;
     }
 
@@ -55,27 +59,25 @@ public abstract class MovableObject : BaseGameObject
         GameManager.instance.playersTurn = true;
     }
 
-    protected virtual void OnAttemptMove <T> (int xDir, int yDir) where T : Component 
+    protected virtual bool OnAttemptMove <T> (int xDir, int yDir) where T : Component 
     {
      
         RaycastHit2D hitObj = new RaycastHit2D ();
 
         bool canMove = Move (xDir, yDir, hitObj);
 
-        if (null == hitObj.transform) 
+        if (!canMove && null != hitObj.transform)
         {
-            return;
-        } 
-        else
-        {
-            T hitComponent = hitObj.transform.gameObject.GetComponent<T> ();
+            T hitComponent = hitObj.transform.GetComponent<T> ();
 
-            if (null != hitObj && !canMove)
+            if (null != hitComponent && !canMove)
             {
-                OnCanotMove<T> (hitComponent);
+                OnCannotMove<T> (hitComponent);
             }
         }
+       
+        return canMove;
     }
 
-    protected abstract void OnCanotMove <T> (T hitComponent) where T : Component;
+    protected abstract void OnCannotMove <T> (T hitComponent) where T : Component;
 }

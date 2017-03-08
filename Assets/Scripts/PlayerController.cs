@@ -38,12 +38,14 @@ class PlayerController : MovableObject
         }
     }
 
-    protected override void OnAttemptMove<T> (int xDir, int yDir)
+    protected override bool OnAttemptMove<T> (int xDir, int yDir)
     {
-        base.OnAttemptMove<T> (xDir, yDir);
+        bool canMove = base.OnAttemptMove<T> (xDir, yDir);
+
+        return canMove;
     }
 
-    protected override void OnCanotMove<Wall>(Wall Component)
+    protected override void OnCannotMove<Wall>(Wall Component)
     {
         
     }
