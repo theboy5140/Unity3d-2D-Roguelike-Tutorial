@@ -41,12 +41,12 @@ public abstract class MovableObject : BaseGameObject
     protected IEnumerator OnMove(Vector3 destination)
     {
         float distance = (transform.position - destination).sqrMagnitude;
-        //rb2d.MovePosition (destination);
+
         while (distance > float.Epsilon)
         {
-            Vector3 newDestination = Vector3.MoveTowards (transform.position, destination, Time.deltaTime);
+            Vector3 position = Vector3.MoveTowards (rb2d.position, destination, Time.deltaTime * inverseMoveTime);
 
-            rb2d.MovePosition (newDestination);
+            rb2d.MovePosition (position);
 
             distance = (transform.position - destination).sqrMagnitude;
 
@@ -54,10 +54,27 @@ public abstract class MovableObject : BaseGameObject
         }
     }
 
-    protected virtual void OnAttemptMove <T> () where T : Component 
+    protected virtual void OnAttemptMove <T> (int xDir, int yDir) where T : Component 
     {
-        
+     
+        RaycastHit2D hitObj = new RaycastHit2D ();
+
+        bool canMove = Move (xDir, yDir, hitObj);
+
+        if (null == hitObj.transform) 
+        {
+            return;
+        } 
+        else
+        {
+            T hitComponent = hitObj.transform.gameObject.GetComponent<T> ();
+
+            if (null != hitObj && !canMove)
+            {
+                OnCanotMove<T> (hitComponent);
+            }
+        }
     }
 
-    protected abstract void OnCanotMove <T> () where T : Component;
+    protected abstract void OnCanotMove <T> (T hitComponent) where T : Component;
 }

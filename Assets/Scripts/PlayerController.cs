@@ -10,24 +10,38 @@ class PlayerController : MovableObject
 
     void Update()
     {
+        ProcessInput();
     }
 
     void FixedUpdate()
     {
-        ProcessInput();
     }
-
-    protected override void OnCanotMove<T> ()
-    {
-    } 
 
     private void ProcessInput()
     {
-        int xDir = (int)(Input.GetAxisRaw ("Horizontal"));
-        int yDir = (int)(Input.GetAxisRaw ("Vertical"));
-        RaycastHit2D hitObj = new RaycastHit2D ();
-        bool canMove = Move (xDir, yDir, hitObj);
-        Log (xDir + ":" + yDir);
+        int horizontal = (int)(Input.GetAxisRaw ("Horizontal"));
+        int vertical = (int)(Input.GetAxisRaw ("Vertical"));
+
+        if (horizontal != 0)
+        {
+            vertical = 0;
+        }
+
+        if (0 != horizontal || 0 != vertical)
+        {
+            OnAttemptMove<PlayerController> (horizontal, vertical);
+        }
+
+        Log (horizontal + ":" + vertical);
     }
 
+    protected override void OnAttemptMove<T> (int xDir, int yDir)
+    {
+        base.OnAttemptMove<T> (xDir, yDir);
+    }
+
+    protected override void OnCanotMove<Wall>(Wall Component)
+    {
+        
+    }
 }
