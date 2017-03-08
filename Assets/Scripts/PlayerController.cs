@@ -34,7 +34,7 @@ class PlayerController : MovableObject
         {
             GameManager.instance.playersTurn = false;
 
-            OnAttemptMove<PlayerController> (horizontal, vertical);
+            OnAttemptMove<WallController> (horizontal, vertical);
         }
     }
 
@@ -45,8 +45,10 @@ class PlayerController : MovableObject
         return canMove;
     }
 
-    protected override void OnCannotMove<Wall>(Wall Component)
+    protected override void OnCannotMove<T>(T hitComponent)
     {
-        
+        WallController wall = hitComponent as WallController;
+        Log (wall);
+        Log (" now player hit a wall object");
     }
 }

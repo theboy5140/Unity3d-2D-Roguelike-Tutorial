@@ -16,7 +16,7 @@ public abstract class MovableObject : BaseGameObject
         inverseMoveTime = 1 / moveTime;
     }
 
-    protected bool Move(int xDir, int yDir, RaycastHit2D hitObj)
+    protected bool Move(int xDir, int yDir, out RaycastHit2D hitObj)
     {
         bool result = false;
 
@@ -64,10 +64,10 @@ public abstract class MovableObject : BaseGameObject
      
         RaycastHit2D hitObj = new RaycastHit2D ();
 
-        bool canMove = Move (xDir, yDir, hitObj);
+        bool canMove = Move (xDir, yDir, out hitObj);
 
         if (!canMove && null != hitObj.transform)
-        {
+        {   
             T hitComponent = hitObj.transform.GetComponent<T> ();
 
             if (null != hitComponent && !canMove)
