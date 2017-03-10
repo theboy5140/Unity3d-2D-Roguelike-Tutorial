@@ -6,6 +6,7 @@ public class GameManager : BaseGameObject
 {
 
     public static GameManager instance = null;
+
     public BoardManager boardManager;
     public GameObject player;
 
@@ -18,7 +19,8 @@ public class GameManager : BaseGameObject
         {
             instance = this;
 
-        }else if(instance != this)
+        }
+        else if(instance != this)
         {
             Destroy (gameObject);
         }
@@ -34,6 +36,5 @@ public class GameManager : BaseGameObject
     void InitGame()
     {
         boardManager.SetupScene (level);
-        Instantiate (player, new Vector2(2,2), Quaternion.identity);
     }
 }

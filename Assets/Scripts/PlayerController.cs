@@ -3,6 +3,9 @@ using UnityEngine;
 
 class PlayerController : MovableObject
 {
+
+    public int damage = 1;
+
     void Start()
     {
         base.Start ();
@@ -48,7 +51,9 @@ class PlayerController : MovableObject
     protected override void OnCannotMove<T>(T hitComponent)
     {
         WallController wall = hitComponent as WallController;
-        Log (wall);
-        Log (" now player hit a wall objects");
+        Animator animator = GetComponent<Animator> ();
+        animator.SetTrigger ("playerChop");
+        wall.OnAttack (damage);
+        Log ("wall life point remains : " + wall.lifePoint);
     }
 }

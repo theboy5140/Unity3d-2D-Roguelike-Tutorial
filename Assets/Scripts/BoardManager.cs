@@ -13,6 +13,7 @@ public class BoardManager : BaseGameObject
     public int wallTime = 1;
 
     public GameObject exitTile;
+    public GameObject playerTile;
     public GameObject[] floorTile;
     public GameObject[] wallTile;
     public GameObject[] outerWallTile;
@@ -28,10 +29,10 @@ public class BoardManager : BaseGameObject
        
         this.level = level;
 
-        SetUpEnemyAndFood ();
+        SpawnItems ();
     }
 
-    void SetUpEnemyAndFood()
+    void SpawnItems()
     {
         int enemyCount = level * enemyTime;
         int foodCount = level * foodTime;
@@ -39,21 +40,33 @@ public class BoardManager : BaseGameObject
 
         for (int i = 0; i < enemyCount; i++)
         {
-            SpawnRandonTile (enemyTile);
+            SpawnRandomTiles (enemyTile);
         }
 
         for (int n = 0; n < foodCount; n++) 
         {
-            SpawnRandonTile (foodTile);
+            SpawnRandomTiles (foodTile);
         }
 
         for (int m = 0; m < wallCount; m++)
         {
-            SpawnRandonTile (wallTile);
+            SpawnRandomTiles (wallTile);
         }
+
+        SpawnRandomTile (playerTile);
     }
 
-    void SpawnRandonTile(GameObject[] tiles)
+    // Spawn only one game tile item
+    void SpawnRandomTile(GameObject tile)
+    {
+        int positionIndex = Random.Range (0, positions.Count);
+        Vector3 position = positions [positionIndex];
+        positions.RemoveAt (positionIndex);
+        Instantiate (tile, position, Quaternion.identity);
+    }
+
+    // Spawn only one game title item ,but from a tile array
+    void SpawnRandomTiles(GameObject[] tiles)
     {
         GameObject tile = tiles[Random.Range(0, tiles.Length)];
         int positionIndex = Random.Range (0, positions.Count);
@@ -95,7 +108,6 @@ public class BoardManager : BaseGameObject
 
     void Start()
     {
-      //  SetUpBoard (1);
     }
 
     void Update()
