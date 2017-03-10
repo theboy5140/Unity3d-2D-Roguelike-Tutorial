@@ -49,6 +49,6 @@ class PlayerController : MovableObject
     {
         WallController wall = hitComponent as WallController;
         Log (wall);
-        Log (" now player hit a wall object");
+        Log (" now player hit a wall objects");
     }
 }
